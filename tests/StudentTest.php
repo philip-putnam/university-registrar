@@ -154,6 +154,26 @@
             //Assert
             $this->assertEquals($bill, $result);
         }
+
+        function test_addCourse()
+        {
+            //Arrange
+            $name = "Robert Smith";
+            $enrollment_date = '0000-00-00';
+            $robert = new Student($name, $enrollment_date);
+            $robert->save();
+
+            $name = "HIST100";
+            $new_course = new Course($name);
+            $new_course->save();
+
+            //Act
+            $robert->addCourse($new_course);
+            $result = $robert->getCourse();
+
+            //Assert
+            $this->assertEquals($new_course, $result[0]);
+        }
     }
 
 
