@@ -172,7 +172,7 @@
             $result = $robert->getCourse();
 
             //Assert
-            $this->assertEquals($new_course, $result[0]);
+            $this->assertEquals([$new_course], $result);
         }
     }
 

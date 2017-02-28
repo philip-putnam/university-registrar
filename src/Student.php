@@ -39,23 +39,38 @@
 
         function getCourse()
         {
-            $query = $GLOBALS['DB']->query("SELECT course_id FROM students_courses WHERE student_id = {$this->getId()};");
-            $course_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+            $returned_courses = $GLOBALS['DB']->query("SELECT courses.* FROM students JOIN students_courses ON (students_courses.student_id = students.id) JOIN courses ON (students_courses.course_id = courses.id) WHERE students.id = {$this->getId()};");
             $courses = array();
 
-            foreach($course_ids as $id) {
-                $course_id = $id['course_id'];
-                $result = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$course_id};");
-                $returned_course = $result->fetchAll(PDO::FETCH_ASSOC);
-
-                $name = $returned_course[0]['name'];
-                $id = $returned_course[0]['id'];
+            foreach($returned_courses as $course) {
+                $name = $course['name'];
+                $id = $course['id'];
                 $new_course = new Course($name, $id);
                 array_push($courses, $new_course);
             }
 
             return $courses;
         }
+
+        // function getCourse()
+        // {
+        //     $query = $GLOBALS['DB']->query("SELECT course_id FROM students_courses WHERE student_id = {$this->getId()};");
+        //     $course_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+        //     $courses = array();
+        //
+        //     foreach($course_ids as $id) {
+        //         $course_id = $id['course_id'];
+        //         $result = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$course_id};");
+        //         $returned_course = $result->fetchAll(PDO::FETCH_ASSOC);
+        //
+        //         $name = $returned_course[0]['name'];
+        //         $id = $returned_course[0]['id'];
+        //         $new_course = new Course($name, $id);
+        //         array_push($courses, $new_course);
+        //     }
+        //
+        //     return $courses;
+        // }
 
         function save()
         {

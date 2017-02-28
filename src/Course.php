@@ -80,23 +80,38 @@
 
         function getStudent()
         {
-            $query = $GLOBALS['DB']->query("SELECT student_id FROM students_courses WHERE course_id = {$this->getId()};");
-            $returned_student_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+            $returned_students = $GLOBALS['DB']->query("SELECT students.* FROM courses JOIN students_courses ON (students_courses.courses_id = courses.id) JOIN students ON (students.id = students_courses.student_id) WHERE courses.id = {$this->getId()};");
             $students = array();
-
-            foreach($returned_student_ids as $id) {
-                $student_id = $id['student_id'];
-                $result = $GLOBALS['DB']->query("SELECT * FROM students WHERE id = {$student_id};");
-
-                $name = $result[0]['name'];
-                $enrollment_date = $result[0]['enrollment_date'];
-                $id = $result[0]['id'];
+            foreach($returned_students as $student)
+            {
+                $name = $student['name'];
+                $enrollment_date = $student['enrollment_date'];
+                $id = $student['id'];
                 $new_student = new Student($name, $enrollment_date, $id);
                 array_push($students, $new_student);
             }
-
             return $students;
         }
+
+        // function getStudent()
+        // {
+        //     $query = $GLOBALS['DB']->query("SELECT student_id FROM students_courses WHERE course_id = {$this->getId()};");
+        //     $returned_student_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+        //     $students = array();
+        //
+        //     foreach($returned_student_ids as $id) {
+        //         $student_id = $id['student_id'];
+        //         $result = $GLOBALS['DB']->query("SELECT * FROM students WHERE id = {$student_id};");
+        //
+        //         $name = $result[0]['name'];
+        //         $enrollment_date = $result[0]['enrollment_date'];
+        //         $id = $result[0]['id'];
+        //         $new_student = new Student($name, $enrollment_date, $id);
+        //         array_push($students, $new_student);
+        //     }
+        //
+        //     return $students;
+        // }
     }
 
 ?>
