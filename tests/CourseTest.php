@@ -61,5 +61,58 @@
             //Assert
             $this->assertEquals($new_course, $result[0]);
         }
+
+        function test_getAll()
+        {
+            //Arrange
+            $name = "HIST100";
+            $new_course = new Course($name);
+            $new_course->save();
+
+            $name2 = "SPAN200";
+            $new_course2 = new Course($name2);
+            $new_course2->save();
+
+            //Act
+            $result = Course::getAll();
+
+            //Assert
+            $this->assertEquals([$new_course, $new_course2], $result);
+        }
+
+        function test_deleteAll()
+        {
+            //Arrange
+            $name = "HIST100";
+            $new_course = new Course($name);
+            $new_course->save();
+
+            //Act
+            Course::deleteAll();
+            $result = Course::getAll();
+
+            //Assert
+            $this->assertEquals([], $result);
+        }
+
+        function test_find()
+        {
+            //Arrange
+            $name = "HIST100";
+            $id = 1;
+            $new_course = new Course($name, $id);
+            $new_course->save();
+
+            $name2 = "SPAN200";
+            $id2 = 2;
+            $new_course2 = new Course($name2, $id2);
+            $new_course2->save();
+
+            //Act
+            $result = Course::find($new_course->getId());
+
+            //Assert
+            $this->assertEquals($new_course, $result);
+        }
     }
 ?>
