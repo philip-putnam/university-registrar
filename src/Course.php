@@ -82,6 +82,7 @@
         {
             $returned_students = $GLOBALS['DB']->query("SELECT students.* FROM courses JOIN students_courses ON (students_courses.courses_id = courses.id) JOIN students ON (students.id = students_courses.student_id) WHERE courses.id = {$this->getId()};");
             $students = array();
+
             foreach($returned_students as $student)
             {
                 $name = $student['name'];
@@ -90,6 +91,7 @@
                 $new_student = new Student($name, $enrollment_date, $id);
                 array_push($students, $new_student);
             }
+
             return $students;
         }
 
