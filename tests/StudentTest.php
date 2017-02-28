@@ -115,6 +115,45 @@
             //Assert
             $this->assertEquals([], $result);
         }
+
+        function test_delete()
+        {
+            //Arrange
+            $name = "Robert Smith";
+            $enrollment_date = '0000-00-00';
+            $robert = new Student($name, $enrollment_date);
+            $robert->save();
+
+            $name2 = "Bill Jones";
+            $bill = new Student($name2, $enrollment_date);
+            $bill->save();
+
+            //Act
+            $robert->delete();
+            $result = Student::getAll();
+
+            //Assert
+            $this->assertEquals($bill, $result[0]);
+        }
+
+        function test_find()
+        {
+            //Arrange
+            $name = "Robert Smith";
+            $enrollment_date = '0000-00-00';
+            $robert = new Student($name, $enrollment_date);
+            $robert->save();
+
+            $name2 = "Bill Jones";
+            $bill = new Student($name2, $enrollment_date);
+            $bill->save();
+
+            //Act
+            $result = Student::find($bill->getId());
+
+            //Assert
+            $this->assertEquals($bill, $result);
+        }
     }
 
 
