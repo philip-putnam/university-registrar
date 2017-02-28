@@ -82,11 +82,13 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM students;");
+            $GLOBALS['DB']->exec("DELETE FROM students_courses;");
         }
 
         function delete()
         {
             $GLOBALS['DB']->exec("DELETE FROM students WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM students_courses WHERE student_id = {$this->getId()};");
         }
 
         static function find($search_id)
