@@ -31,6 +31,11 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM professors WHERE id = {$this->getId()};");
+        }
+
         static function getAll()
         {
             $returned_professors = $GLOBALS['DB']->query("SELECT * FROM professors;");
@@ -49,6 +54,22 @@
         static function deleteAll()
         {
             $GLOBALS['DB']->exec("DELETE FROM professors;");
+        }
+
+        static function find($professor_id)
+        {
+            $professors = Professor::getAll();
+            $found_professor = null;
+
+            foreach($professors as $professor)
+            {
+                $id = $professor->getId();
+                if ($id == $professor_id)
+                {
+                    $found_professor = $professor;
+                }
+            }
+            return $found_professor;
         }
 
     }

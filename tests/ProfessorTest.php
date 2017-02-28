@@ -115,6 +115,51 @@
             $this->assertEquals([], $result);
 
         }
+
+        function test_find()
+        {
+            //Arrange
+            $name = "John Wilkins";
+            $professor = new Professor($name);
+            $professor->save();
+
+            $name2 = "Susan Smith";
+            $professor2 = new Professor($name2);
+            $professor2->save();
+
+            $name3 = "Jill Hill";
+            $professor3 = new Professor($name3);
+            $professor3->save();
+
+            //Act
+            $result = Professor::find($professor2->getId());
+
+            //Assert
+            $this->assertEquals($professor2, $result);
+        }
+
+        function test_delete()
+        {
+            //Arrange
+            $name = "John Wilkins";
+            $professor = new Professor($name);
+            $professor->save();
+
+            $name2 = "Susan Smith";
+            $professor2 = new Professor($name2);
+            $professor2->save();
+
+            $name3 = "Jill Hill";
+            $professor3 = new Professor($name3);
+            $professor3->save();
+
+            //Act
+            $professor->delete();
+            $result = Professor::getAll();
+
+            //Assert
+            $this->assertEquals([$professor2, $professor3], $result);
+        }
     }
 
 ?>
