@@ -10,12 +10,14 @@
     $DB = new PDO($server, $username, $password);
 
     require_once 'src/Course.php';
+    require_once 'src/Student.php';
 
     class CourseTest extends PHPUnit_Framework_TestCase
     {
         protected function tearDown()
         {
             Course::deleteAll();
+            Student::deleteAll();
         }
 
         function test_getId()
