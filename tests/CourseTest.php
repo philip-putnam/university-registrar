@@ -114,5 +114,26 @@
             //Assert
             $this->assertEquals($new_course, $result);
         }
+
+        function test_delete()
+        {
+            //Arrange
+            $name = "HIST100";
+            $id = 1;
+            $new_course = new Course($name, $id);
+            $new_course->save();
+
+            $name2 = "SPAN200";
+            $id2 = 2;
+            $new_course2 = new Course($name2, $id2);
+            $new_course2->save();
+
+            //Act
+            $new_course->delete();
+            $result = Course::getAll();
+
+            //Assert
+            $this->assertEquals($new_course2, $result[0]);
+        }
     }
 ?>

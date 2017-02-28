@@ -65,6 +65,11 @@
 
             return $found_course;
         }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM courses WHERE id = {$this->getId()};");
+        }
     }
 
 ?>
