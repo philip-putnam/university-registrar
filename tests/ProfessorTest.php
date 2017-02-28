@@ -15,6 +15,11 @@
 
     class ProfessorTest extends PHPUnit_Framework_TestCase
     {
+        protected function tearDown()
+        {
+            Professor::deleteAll();
+        }
+
         function test_getId()
         {
             //Arrange
@@ -33,11 +38,10 @@
         {
             //Arrange
             $name = "John Wilkins";
-            $id = 123;
-            $new_professor = new Professor($name, $id);
+            $professor = new Professor($name);
 
             //Act
-            $result = $new_professor->getName();
+            $result = $professor->getName();
 
             //Assert
             $this->assertEquals("John Wilkins", $result);
@@ -47,16 +51,69 @@
         {
             //Arrange
             $name = "John Wilkins";
-            $id = 123;
             $new_name = "Susan Wilkins";
-            $new_professor = new Professor($name, $id);
+            $professor = new Professor($name);
 
             //Act
-            $new_professor->setName($new_name);
-            $result = $new_professor->getName();
+            $professor->setName($new_name);
+            $result = $professor->getName();
 
             //Assert
             $this->assertEquals("Susan Wilkins", $result);
+        }
+
+        function test_save()
+        {
+            //Arrange
+            $name = "John Wilkins";
+            $professor = new Professor($name);
+            $professor->save();
+
+            //Act
+            $result = Professor::getAll();
+
+            //Assert
+            $this->assertEquals([$professor], $result);
+
+        }
+
+        function test_getAll()
+        {
+            //Arrange
+            $name = "John Wilkins";
+            $professor = new Professor($name);
+            $professor->save();
+
+            $name2 = "Susan Smith";
+            $professor2 = new Professor($name2);
+            $professor2->save();
+
+            $name3 = "Jill Hill";
+            $professor3 = new Professor($name3);
+            $professor3->save();
+
+            //Act
+            $result = Professor::getAll();
+
+            //Assert
+            $this->assertEquals([$professor, $professor2, $professor3], $result);
+
+        }
+
+        function test_deleteAll()
+        {
+            //Arrange
+            $name = "John Wilkins";
+            $professor = new Professor($name);
+            $professor->save();
+
+            //Act
+            Professor::deleteAll();
+            $result = Professor::getAll();
+
+            //Assert
+            $this->assertEquals([], $result);
+
         }
     }
 
