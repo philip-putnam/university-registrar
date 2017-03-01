@@ -36,6 +36,26 @@
             $GLOBALS['DB']->exec("DELETE FROM professors WHERE id = {$this->getId()};");
         }
 
+        function addStudent($student)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO professors_students (student_id, )")
+        }
+
+        function getStudents()
+        {
+
+        }
+
+        function addCourse()
+        {
+
+        }
+
+        function getCourses()
+        {
+
+        }
+
         static function getAll()
         {
             $returned_professors = $GLOBALS['DB']->query("SELECT * FROM professors;");
